@@ -23,6 +23,7 @@ globset = "0.4.15"
 image = "0.25.4"
 inquire = "0.7.5"
 log = "0.4.22"
+md5 = "0.7.0"
 rbx_binary = { version = "0.7.7", features = ["serde"] }
 rbx_cookie = { version = "0.1.4", default-features = false }
 rbx_xml = "0.13.5"

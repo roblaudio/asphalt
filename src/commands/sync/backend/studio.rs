@@ -1,4 +1,5 @@
 use std::{env, path::PathBuf};
+use md5::compute;
 
 use anyhow::Context;
 use log::{debug, info, warn};
@@ -85,7 +86,11 @@ impl SyncBackend for StudioBackend {
             return Ok(SyncResult::None);
         }
 
-        let asset_path = asset_path(state.asset_dir.to_str().unwrap(), path, asset.extension())
+        let bytes = std::fs::read(path).unwrap();
+        let hash = compute(&bytes);
+        let hash_str = format!("{:x}", hash);
+
+        let asset_path = asset_path(state.asset_dir.to_str().unwrap(), path, &(hash_str + "." + asset.extension()))
             .context("Failed to normalize asset path")?;
         write_to_path(&self.sync_path, &asset_path, asset.data())
             .await
